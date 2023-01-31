@@ -6,6 +6,8 @@ exports.hashPass = async (request,response,next) => {
 try {
     // take a password out of the body, hash (encrypt) it using bcrypt and then put back the encrypted password to overwrite the unencrypted password and then pass on the updated body to the next function.
     const passwordCopy = request.body.password;
+    console.log(process.env.SALT)
+    console.log(typeof(process.env.SALT));
     const hashedPass = await bcrypt.hash(passwordCopy,10);
     console.log(hashedPass);
     //first parameter of hash is the plain text password to be encrypted, the second parameter is the 'salt' which is the amount of encrypting that is carried out. More salt gives better encryption but takes longer
@@ -22,7 +24,8 @@ try {
 exports.comparePass = async (request,response,next) => {
     try {
         request.user = await User.findOne({username: request.body.username});
-        console.log(request.user);
+        console.log(request.body)
+        console.log(request.body.user);
         //This pulls the user info from the databse including the hashed password
         const passCheck = await bcrypt.compare(request.body.password, request.user.password)
         console.log(passCheck);

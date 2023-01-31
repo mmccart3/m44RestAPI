@@ -9,5 +9,6 @@ const userRouter = Router();
 userRouter.get("/listUser", tokenCheck, listUsers);
 userRouter.post("/addUser",hashPass,createUser);
 userRouter.post("/login",comparePass,login);
+userRouter.get("/authCheck",tokenCheck,login);
 
 module.exports = userRouter;
