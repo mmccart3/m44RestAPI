@@ -25,11 +25,13 @@ exports.listUsers = async (request,response) => {
 
 exports.login = async (request,response) => {
     try {
-        if (request.AuthUser) {
-            console.log("token check passed and continue to persistent login")
-            response.status(200).send({username: request.authUser.username})
-            return
-        }
+        console.log("login route:",request.user)
+        // if (request.user) {
+        //     console.log("token check passed and continue to persistent login")
+        //     const token = jwt.sign({_id: request.user._id},process.env.SECRET_KEY);
+        //     response.status(200).send({user: request.user.username, token})
+        //     return
+        // }
         const token = jwt.sign({_id: request.user._id},process.env.SECRET_KEY);
         response.status(200).send({user: request.user.username, token});
     } catch (error) {
